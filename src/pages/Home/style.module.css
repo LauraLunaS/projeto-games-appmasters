@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+body {
+  background: #0F1219;
+}
+
+.columnContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    list-style-type: none;
+    background: #0F1219;
+    margin-top: 30px;
+  }
+  
+  .columnItem {
+    display: flex;
+    justify-content: center; 
+  }
+  
+  .cardfilm {
+    height: 300px;
+    border-radius: 40px;
+    background: #23252a;
+    padding: 15px;
+    cursor: pointer;
+    margin-bottom: 40px;
+  }
+
+  .thumb {
+    border-radius: 40px 40px 0px 0px;
+    height: 200px;
+    background-color: aqua;
+  }
+
+  .title {
+    color:aliceblue;
+    text-align: center;
+    font-family: Russo One;
+    font-size: 17pt;
+    margin-top: 15px;
+    margin-bottom: 20;
+    word-wrap: break-word;
+    width: 70%;
+  }
+
+  .genre {
+    color: white;
+    text-align: center;
+    background-color: #FF4646;
+    border-radius: 0px 20px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    height: 30px;
+    width: 50%;
+    margin-top: 10px;
+    padding-top: 5px;
+  }
+
+  .categories {
+    color: white;
+    font-family: "Poppins";
+    font-size: 14pt;
+    margin: 80px;
+  }
+
+  .selectGenre {
+    right: 50px; 
+    border-radius: 10px;
+    background: rgba(87, 87, 87, 0.17);
+    color: white;
+    width: 200px;
+    height: 35px;
+  }
+
+  .titleCategory {
+    color: white;
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 15pt;
+    margin-left: 20px;
+    margin-top: 40px;
+  }
