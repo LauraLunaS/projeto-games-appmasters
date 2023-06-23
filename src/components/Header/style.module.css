@@ -13,6 +13,13 @@
     margin: 10px;
 }
 
+.searchContainer {
+    position: absolute;
+    display: flex;
+    top: 0;
+    right: 100px;
+}
+
 .titleLogo {
     font-family: Russo One;
     color: white;
@@ -22,24 +29,22 @@
 }
 
 .search {
-    width: 220px;
+    width: 300px;
     height: 35px;
     border-radius: 5px;
     background-color: rgb(22, 22, 22);
     margin-top: 15px;
-    margin-left: 700px;
     background-image: url("https://assets.stickpng.com/images/585e4ae1cb11b227491c3393.png");
     background-size: 6% auto;
     background-repeat: no-repeat;
     background-position: 15px center;
     color: white;
     outline: none;
-    padding-left: 40px;
-}
-
-
-.btnsearch {
-    width: 100px;
+    padding-left: 15px;
+  }
+  
+  .btnsearch {
+    width: 40%;
     height: 35px;
     border-radius: 5px;
     background-color: #ffb727;
@@ -48,4 +53,44 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
-}
+  }
+
+  @media (min-widht:580px) {
+    .search {
+        background-color: blue;
+      
+    }
+  }
+
+
+  @media (max-width:600px) {
+
+    .search {
+        width: 20%;
+    }
+   
+
+    .titleLogo {
+        font-size: 9pt;
+        margin-left: 5px;
+    }
+
+    .logo {
+        width: 30px;
+        height: 30px;
+        margin-top: 15px;
+    }
+  }
+
+  @media (max-width:801px) { 
+
+    .search {
+        width: 200px;
+    }
+
+    .btnsearch {
+        width: 90px;
+    }
+    
+  }
+  

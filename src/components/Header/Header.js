@@ -18,13 +18,15 @@ export default function Header({ onSearch, onSearchButtonClick }) {
     <div className={style.header}>
       <img src={logo} className={style.logo} alt="Logo" />
       <p className={style.titleLogo}>GameZone</p>
-      <input
-        type="text"
-        className={style.search}
-        value={searchTerm}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSearchClick} className={style.btnsearch}>Search</button>
+      <div className={style.searchContainer}>
+        <input
+          type="text"
+          className={style.search}
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleSearchClick} className={style.btnsearch}>Search</button>
+      </div>
     </div>
   );
 }

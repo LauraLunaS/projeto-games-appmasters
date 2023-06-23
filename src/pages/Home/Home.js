@@ -13,8 +13,8 @@ function Home() {
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
-
   const [genres, setGenres] = useState([]);
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -98,6 +98,7 @@ function Home() {
       game.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setGames(filtered);
+    setNoResults(filtered.length === 0);
   };
 
   const handleGenreChange = (event) => {
@@ -105,8 +106,8 @@ function Home() {
   };
 
   const filteredGames = selectedGenre
-    ? games.filter((game) => game.genre === selectedGenre)
-    : games;
+    ? games.filter((game) => game.genre === selectedGenre && game.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    : games.filter((game) => game.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div>
@@ -118,9 +119,10 @@ function Home() {
             <>
               <Header onSearch={setSearchTerm} onSearchButtonClick={handleSearch} />
               <Thumb />
-              <div>
-                <label htmlFor="genreSelect" className={style.categories}>Categorias:
-                <select id="genreSelect" 
+              <div className={style.containerSelectGenre}>
+                <label htmlFor="genreSelect" className={style.categories}></label>
+                <select 
+                id="genreSelect" 
                 value={selectedGenre} 
                 onChange={handleGenreChange} 
                 className={style.selectGenre}>
@@ -129,24 +131,27 @@ function Home() {
                     <option key={genre} value={genre}>{genre}</option>
                   ))}
                 </select>
-                </label>
               </div>
-              <p className={style.titleCategory}>TODOS OS JOGOS</p>
-              <ul className={style.columnContainer}>
-                {Array.isArray(filteredGames) ? (
-                  filteredGames.map((game) => (
-                    <li key={game.id} className={style.columnItem}>
-                      <div className={style.cardfilm}>
-                        <img src={game.thumbnail} alt={game.title} className={style.thumb} />
-                        <h5 className={style.genre}>{game.genre}</h5>
-                        <h2 className={style.title}>{game.title}</h2>
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <div>Erro ao obter a lista de jogos.</div>
-                )}
-              </ul>
+              <p className={style.titleCategory}>{selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}</p>
+              {noResults ? (
+                <p className={style.noResultsMessage}>Nenhum jogo encontrado.</p>
+              ) : (
+                <ul className={style.columnContainer}>
+                  {Array.isArray(filteredGames) ? (
+                    filteredGames.map((game) => (
+                      <li key={game.id} className={style.columnItem}>
+                        <div className={style.cardfilm}>
+                          <img src={game.thumbnail} alt={game.title} className={style.thumb} />
+                          <h5 className={style.genre}>{game.genre}</h5>
+                          <h2 className={style.title}>{game.title}</h2>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <div>Erro ao obter a lista de jogos.</div>
+                  )}
+                </ul>
+              )}
             </>
           ) : (
             <>
