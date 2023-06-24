@@ -34,13 +34,13 @@
     border-radius: 5px;
     background-color: rgb(22, 22, 22);
     margin-top: 15px;
-    background-image: url("https://assets.stickpng.com/images/585e4ae1cb11b227491c3393.png");
+    background-image: url("/src/assets/search.png");
     background-size: 6% auto;
     background-repeat: no-repeat;
     background-position: 15px center;
     color: white;
     outline: none;
-    padding-left: 15px;
+    padding-left: 35px;
   }
   
   .btnsearch {
@@ -55,42 +55,38 @@
     cursor: pointer;
   }
 
-  @media (min-widht:580px) {
-    .search {
-        background-color: blue;
-      
-    }
-  }
-
-
-  @media (max-width:600px) {
-
-    .search {
-        width: 20%;
-    }
-   
-
-    .titleLogo {
-        font-size: 9pt;
-        margin-left: 5px;
-    }
-
-    .logo {
-        width: 30px;
-        height: 30px;
-        margin-top: 15px;
-    }
-  }
-
-  @media (max-width:801px) { 
-
+  @media only screen and (max-width: 600px) {
     .search {
         width: 200px;
     }
 
-    .btnsearch {
-        width: 90px;
+    .titleLogo {
+        display: none;
     }
-    
+
+    .logo {
+        width: 35px;
+        height: 35px;
+        margin: 15px;
+    }
   }
-  
+
+  @media only screen and (min-width: 600px) {
+    .search {
+        width: 200px;
+    }
+
+    .titleLogo {
+        display: none;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .search {
+        width: 280px;
+    }
+
+    .titleLogo {
+        display: inline;
+    }
+  }

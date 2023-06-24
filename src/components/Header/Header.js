@@ -2,16 +2,28 @@ import React, { useState } from 'react';
 import style from './style.module.css';
 import logo from '../../assets/logo.png';
 
+import Load from '../Load/Load';
+
 export default function Header({ onSearch, onSearchButtonClick }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const handleSearchClick = () => {
-    onSearch(searchTerm);
-    onSearchButtonClick();
+    setSearchTerm('');
+    setIsLoading(true);
+
+    if (searchTerm.trim() !== '') {
+      onSearch(searchTerm);
+      onSearchButtonClick();
+    } else {
+      window.location.reload();
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -25,7 +37,9 @@ export default function Header({ onSearch, onSearchButtonClick }) {
           value={searchTerm}
           onChange={handleInputChange}
         />
-        <button onClick={handleSearchClick} className={style.btnsearch}>Search</button>
+        <button onClick={handleSearchClick} className={style.btnsearch}>
+          {isLoading ? <Load /> : 'Search'}
+        </button>
       </div>
     </div>
   );

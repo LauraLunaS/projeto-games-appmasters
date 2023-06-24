@@ -3,18 +3,19 @@ import axios from 'axios';
 import style from './style.module.css';
 
 import Header from '../../components/Header/Header';
-import Category from '../../components/Category/Category';
-import Thumb from "../../components/Thumb/Thumb"
-import Error from "../Error/Error"
+import Thumb from '../../components/Thumb/Thumb';
+import Load from '../../components/Load/Load';
+import Error from "../Error/Error";
 
-function Home() {
+
+export default function Home() {
   const [games, setGames] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [genres, setGenres] = useState([]);
   const [noResults, setNoResults] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,7 +26,7 @@ function Home() {
       if (isMounted) {
         source.cancel('Timeout');
         setErrorMessage('O servidor demorou para responder, tente mais tarde.');
-        setIsLoading(false);
+        setIsLoadingData(false);
       }
     }, 5000);
 
@@ -41,16 +42,15 @@ function Home() {
         if (isMounted) {
           if (!axios.isCancel(response)) {
             setGames(response.data);
-            setIsLoading(false);
             console.log(response.data);
             const uniqueGenres = [...new Set(response.data.flatMap(game => game.genre))];
             setGenres(uniqueGenres);
+            setIsLoadingData(false);
           }
         }
       })
       .catch((error) => {
         console.error(error);
-        setIsLoading(false);
 
         if (axios.isCancel(error)) {
           console.log('Request canceled:', error.message);
@@ -69,12 +69,14 @@ function Home() {
               setErrorMessage(
                 'O servidor falhou em responder. Tente recarregar a página.'
               );
+              setIsLoadingData(false);
             }
           } else {
             if (isMounted && !errorMessage) {
               setErrorMessage(
                 'O servidor não conseguirá responder por agora. Tente voltar novamente mais tarde.'
               );
+              setIsLoadingData(false);
             }
           }
         } else {
@@ -82,86 +84,86 @@ function Home() {
             setErrorMessage(
               'Ocorreu um erro ao obter os dados. Verifique sua conexão com a internet.'
             );
+            setIsLoadingData(false);
           }
         }
       });
 
-    return () => {
-      isMounted = false;
-      clearTimeout(timeoutId);
-      source.cancel('Componente desmontado');
-    };
-  }, [errorMessage]);
+      return () => {
+          isMounted = false;
+            clearTimeout(timeoutId);
+            source.cancel('Componente desmontado');
+            };
+          }, [errorMessage]);
 
-  const handleSearch = () => {
-    const filtered = games.filter((game) =>
-      game.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setGames(filtered);
-    setNoResults(filtered.length === 0);
-  };
+          const handleSearch = () => {
+            const filtered = games.filter((game) =>
+              game.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setGames(filtered);
+            setNoResults(filtered.length === 0);
+          };
 
-  const handleGenreChange = (event) => {
-    setSelectedGenre(event.target.value);
-  };
+            const handleGenreChange = (event) => {
+              setSelectedGenre(event.target.value);
+            };
 
-  const filteredGames = selectedGenre
-    ? games.filter((game) => game.genre === selectedGenre && game.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    : games.filter((game) => game.title.toLowerCase().includes(searchTerm.toLowerCase()));
+          const filteredGames = selectedGenre
+            ? games.filter((game) => game.genre === selectedGenre && game.title.toLowerCase().includes(searchTerm.toLowerCase()))
+            : games.filter((game) => game.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  return (
-    <div>
-      {isLoading ? (
-        <div>Carregando...</div>
-      ) : (
-        <>
-          {!errorMessage ? (
-            <>
-              <Header onSearch={setSearchTerm} onSearchButtonClick={handleSearch} />
-              <Thumb />
-              <div className={style.containerSelectGenre}>
-                <label htmlFor="genreSelect" className={style.categories}></label>
-                <select 
-                id="genreSelect" 
-                value={selectedGenre} 
-                onChange={handleGenreChange} 
-                className={style.selectGenre}>
-                  <option value="">Todos</option>
-                  {genres.map((genre) => (
-                    <option key={genre} value={genre}>{genre}</option>
-                  ))}
-                </select>
+            return (
+              <div>
+                {!errorMessage ? (
+                  <>
+                    <Header onSearch={setSearchTerm} onSearchButtonClick={handleSearch} />
+                    <Thumb />
+                    <div className={style.containerSelectGenre}>
+                      <label htmlFor="genreSelect" className={style.categories}></label>
+                      <select
+                        id="genreSelect"
+                        value={selectedGenre}
+                        onChange={handleGenreChange}
+                        className={style.selectGenre}
+                      >
+                        <option value="">Todos</option>
+                        {genres.map((genre) => (
+                          <option key={genre} value={genre}>
+                            {genre}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <p className={style.titleCategory}>
+                      {selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}
+                    </p>
+                    {isLoadingData ? (
+                      <Load />
+                    ) : noResults ? (
+                      <p className={style.noResultsMessage}>Nenhum jogo encontrado.</p>
+                    ) : (
+                      <ul className={style.columnContainer}>
+                        {Array.isArray(filteredGames) ? (
+                          filteredGames.map((game) => (
+                            <li key={game.id} className={style.columnItem}>
+                              <div className={style.cardfilm}>
+                                <img src={game.thumbnail} alt={game.title} className={style.thumb} />
+                                <h5 className={style.genre}>{game.genre}</h5>
+                                <h2 className={style.title}>{game.title}</h2>
+                              </div>
+                            </li>
+                          ))
+                        ) : (
+                          <div>Erro ao obter a lista de jogos.</div>
+                        )}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Error errorMessage={errorMessage} />
+                  </>
+                )}
               </div>
-              <p className={style.titleCategory}>{selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}</p>
-              {noResults ? (
-                <p className={style.noResultsMessage}>Nenhum jogo encontrado.</p>
-              ) : (
-                <ul className={style.columnContainer}>
-                  {Array.isArray(filteredGames) ? (
-                    filteredGames.map((game) => (
-                      <li key={game.id} className={style.columnItem}>
-                        <div className={style.cardfilm}>
-                          <img src={game.thumbnail} alt={game.title} className={style.thumb} />
-                          <h5 className={style.genre}>{game.genre}</h5>
-                          <h2 className={style.title}>{game.title}</h2>
-                        </div>
-                      </li>
-                    ))
-                  ) : (
-                    <div>Erro ao obter a lista de jogos.</div>
-                  )}
-                </ul>
-              )}
-            </>
-          ) : (
-            <>
-              <Error errorMessage={errorMessage} />
-            </>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-
-export default Home;
+            );
+    }

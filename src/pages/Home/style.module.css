@@ -105,31 +105,9 @@ body {
   }
 
 
-  @media (max-width:801px) { 
+  @media only screen and (max-width: 600px) {
 
-    .columnContainer {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); 
-    }
-
-    .genre {
-      font-size: 10pt;
-    }
-
-    .title {
-      font-size: 14pt;
-    }
-  }
- 
-  @media (max-width:600px) {
-
-    .columnContainer {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr); 
-    }
-
-    .genre {
-      font-size: 10pt;
+    .cardfilm {
       width: 50%;
     }
 
@@ -137,9 +115,51 @@ body {
       font-size: 13pt;
     }
 
-    .cardfilm {
-      width: 60%;
+    .columnContainer {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
     }
-    
+
+    .titleCategory {
+      font-size: 12pt;
+      margin-top: 60px;
+    }
+
+    .selectGenre {
+      width: 150px;
+    }
+
   }
-  
+
+  @media only screen and (min-width: 600px) {
+
+    .title {
+      font-size: 13pt;
+    }
+
+    .columnContainer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
+
+  @media only screen and (min-width: 768px) {
+
+    .title {
+      font-size: 13pt;
+    }
+
+    .columnContainer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+  }
+
+  @media only screen and (min-width: 992px) {
+
+    .title {
+      font-size: 15.5pt;
+    }
+  }
