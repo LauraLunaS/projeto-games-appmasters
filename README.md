@@ -1,9 +1,10 @@
-Projeto realizado para o programa de seleção de estágio FrontEnd React da App Maters
+Projeto realizado para o programa de seleção de estágio FrontEnd React da App Masters
 
 link para o site publicado: https://projeto-games.vercel.app/
 
 prints do projeto final
-![image](https://github.com/LauraLunaS/projeto-games-appmasters/assets/100363307/0c3e94aa-c7f1-4bd7-bd91-4375e893436b)
+
+![image](https://github.com/LauraLunaS/projeto-games-appmasters/assets/100363307/1902098c-f9ec-4766-8e39-833fa35b98f8)
 ![image](https://github.com/LauraLunaS/projeto-games-appmasters/assets/100363307/c188cde6-63cf-4487-8cd1-e6d393827fc8)
 
 
