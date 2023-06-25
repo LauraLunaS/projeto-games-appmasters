@@ -60,6 +60,10 @@
         width: 175px;
     }
 
+    .searchContainer {
+        right: 85px;
+    }
+
     .titleLogo {
         display: none;
     }
