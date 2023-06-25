@@ -29,3 +29,54 @@
 .errorImage {
     width: 180px;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .titleError {
+        font-size: 10pt;
+        word-wrap: break-word;
+    }
+
+    .subtitleError {
+        font-size: 11pt;
+    }
+
+    .errorImage {
+        width: 150px;
+    }
+
+}
+
+@media only screen and (min-width: 600px) {
+
+    .titleError {
+        font-size: 12pt;
+        word-wrap: break-word;
+    }
+
+    .subtitleError {
+        font-size: 13pt;
+    }
+
+    .errorImage {
+        width: 160px;
+    }
+
+}
+
+@media only screen and (min-width: 768px) {
+
+    .titleError {
+        font-size: 15pt;
+        word-wrap: break-word;
+    }
+
+    .subtitleError {
+        font-size: 20pt;
+    }
+
+    .errorImage {
+        width: 180px;
+    }
+
+}

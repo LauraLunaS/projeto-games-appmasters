@@ -17,7 +17,7 @@ body {
     justify-content: center; 
   }
   
-  .cardfilm {
+  .cardGame {
     height: 320px;
     width: 100%;
     border-radius: 40px;
@@ -28,7 +28,7 @@ body {
     margin: 20px;
   }
 
-  .cardfilm:hover {
+  .cardGame:hover {
     background-color: #3a3d43; 
     border: 2px solid #ffb727;
     transition: background-color 1s ease;
@@ -41,7 +41,7 @@ body {
     width: 100%;
   }
 
-  .title {
+  .titleGame {
     color:aliceblue;
     text-align: center;
     font-family: Russo One;
@@ -51,7 +51,7 @@ body {
     word-wrap: break-word;
   }
 
-  .genre {
+  .genreGame {
     color: white;
     text-align: center;
     background-color: #FF4646;
@@ -107,11 +107,11 @@ body {
 
   @media only screen and (max-width: 600px) {
 
-    .cardfilm {
+    .cardGame {
       width: 50%;
     }
 
-    .title {
+    .titleGame {
       font-size: 13pt;
     }
 
@@ -133,7 +133,7 @@ body {
 
   @media only screen and (min-width: 600px) {
 
-    .title {
+    .titleGame {
       font-size: 13pt;
     }
 
@@ -146,7 +146,7 @@ body {
 
   @media only screen and (min-width: 768px) {
 
-    .title {
+    .titleGame {
       font-size: 13pt;
     }
 
@@ -159,7 +159,7 @@ body {
 
   @media only screen and (min-width: 992px) {
 
-    .title {
+    .titleGame {
       font-size: 15.5pt;
     }
   }

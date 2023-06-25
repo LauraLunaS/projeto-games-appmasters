@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import style from './style.module.css';
 import logo from '../../assets/logo.png';
 
-import Load from '../Load/Load';
+import Load from '../Load';
 
 export default function Header({ onSearch, onSearchButtonClick }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,8 +28,8 @@ export default function Header({ onSearch, onSearchButtonClick }) {
 
   return (
     <div className={style.header}>
-      <img src={logo} className={style.logo} alt="Logo" />
-      <p className={style.titleLogo}>GameZone</p>
+        <img src={logo} className={style.logo} alt="Logo" />
+        <p className={style.titleLogo}>GameZone</p>
       <div className={style.searchContainer}>
         <input
           type="text"
