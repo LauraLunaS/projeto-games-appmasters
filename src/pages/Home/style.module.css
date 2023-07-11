@@ -1,15 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
 
 body {
-  background: #0F1219;
+  background: #01091f;
 }
 
 .columnContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    list-style-type: none;
-    background: #0F1219;
-    margin-top: 30px;
+    display: flex;
   }
   
   .columnItem {
@@ -18,60 +14,55 @@ body {
   }
   
   .cardGame {
-    height: 320px;
-    width: 100%;
-    border-radius: 40px;
-    background: #23252a;
-    padding: 15px;
+    height: 430px;
+    width: 75%;
+    border-radius: 10px;
+    background: #091534;
     cursor: pointer;
     margin-bottom: 40px;
     margin: 20px;
-  }
-
-  .cardGame:hover {
-    background-color: #3a3d43; 
-    border: 2px solid #ffb727;
-    transition: background-color 1s ease;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.153);
   }
   
-
   .thumb {
-    border-radius: 40px 40px 0px 0px;
-    height: 200px;
+    border-radius: 10px 10px 0px 0px;
+    height: 220px;
     width: 100%;
   }
 
   .titleGame {
-    color:aliceblue;
+    color:rgb(222, 222, 222);
     text-align: center;
-    font-family: Russo One;
-    font-size: 16pt;
+    font-family: "Montserrat";
+    font-size: 10pt;
     margin-top: 15px;
-    margin-bottom: 30;
+    margin-bottom: 40;
     word-wrap: break-word;
   }
 
   .genreGame {
     color: white;
     text-align: center;
-    background-color: #FF4646;
+    background-color: #FF5C00;
     border-radius: 0px 20px;
     font-family: 'Poppins';
+    font-size: 9pt;
     font-weight: 400;
-    height: 30px;
-    width: 50%;
-    margin-top: 10px;
+    height: 25px;
+    width: 40%;
     padding-top: 5px;
+    margin-top: -4px;
   }
 
   .containerSelectGenre {
-    float: right;
-    margin-top: 20px;
+    display: flex;
+    margin-left: 55px;
+    margin-right: 55px;
+    margin-bottom: 15px;
   }
 
   .selectGenre {
-    float: right;
-    margin-right: 40px;
+    margin-left: 60%;
     border-radius: 10px;
     background-color: rgba(87, 87, 87, 0.17);
     color: white;
@@ -89,19 +80,42 @@ body {
   }
   
   .titleCategory {
-    margin-left: 30%;
     color: white;
-    font-family: "Poppins";
-    font-weight: 700;
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 15pt;
-    margin-left: 40px;
-    margin-top: 50px;
+    margin-left: 20px;
+    width: 30%;
   }
  
   .noResultsMessage {
     color: #ffffff;
     font-family: "Poppins";
     margin: 50px;
+  }
+
+  .iconGroup {
+    width: 25px;
+    height: 25px;
+  }
+
+  .linha {
+    width: 70%;
+    border: 2px solid #FF5C00;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 auto;
+  }
+
+  .descGame {
+    color: white;
+    font-family: "Montserrat";
+    font-weight: 600;
+    font-size: 9pt;
+    padding: 10px;
   }
 
 
@@ -112,7 +126,7 @@ body {
     }
 
     .titleGame {
-      font-size: 13pt;
+      font-size: 10pt;
     }
 
     .columnContainer {
@@ -121,20 +135,27 @@ body {
     }
 
     .titleCategory {
-      font-size: 11pt;
-      margin-top: 60px;
+      font-size: 9pt;
     }
 
     .selectGenre {
       width: 150px;
     }
 
+    .descGame {
+      font-size: 8pt;
+    }
+
   }
 
   @media only screen and (min-width: 600px) {
 
+    .titleCategory {
+      font-size: 11pt;
+    }
+
     .titleGame {
-      font-size: 13pt;
+      font-size: 12pt;
     }
 
     .columnContainer {
@@ -160,6 +181,11 @@ body {
   @media only screen and (min-width: 992px) {
 
     .titleGame {
-      font-size: 15.5pt;
+      font-size: 14pt;
+      margin-bottom: 10px;
+    }
+
+    .titleCategory {
+      font-size: 14pt;
     }
   }

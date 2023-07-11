@@ -6,7 +6,9 @@ import Header from '../../components/Header';
 import Thumb from '../../components/Thumb';
 import Load from '../../components/Load';
 import Error from "../Error";
-
+import Rating from "../../components/Rating"
+import GameList from '../../components/GameList'
+import iconGroup from '../../assets/iconGroup.png'
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -42,6 +44,7 @@ export default function Home() {
         clearTimeout(timeoutId);
         if (isMounted) {
           if (!axios.isCancel(response)) {
+            console.log(response.data);
             setGames(response.data);
             const uniqueGenres = [...new Set(response.data.flatMap((game) => game.genre))];
             setGenres(uniqueGenres);
@@ -120,19 +123,21 @@ export default function Home() {
     setNoResults(filtered.length === 0);
   };
   
-
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
   };
+  
 
   return (
     <div>
       {!errorMessage ? (
         <>
-          <Header onSearch={setSearchTerm} onSearchButtonClick={handleSearch} />
-          <Thumb />
           <div className={style.containerSelectGenre}>
-            <label htmlFor="genreSelect" className={style.categories}></label>
+          <img src={iconGroup} className={style.iconGroup}></img>
+          <p className={style.titleCategory}>
+            {selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}
+          </p>
+          <label htmlFor="genreSelect" className={style.categories}></label>
             <select
               id="genreSelect"
               value={selectedGenre}
@@ -147,9 +152,6 @@ export default function Home() {
               ))}
             </select>
           </div>
-          <p className={style.titleCategory}>
-            {selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}
-          </p>
           {isLoadingData ? (
             <Load />
           ) : noResults ? (
@@ -162,9 +164,13 @@ export default function Home() {
                 filteredGames.map((game) => (
                   <li key={game.id} className={style.columnItem}>
                     <div className={style.cardGame}>
+                      <GameList gameTitle={game.title} genre={game.genre} thumbnail={game.thumbnail} />
                       <img src={game.thumbnail} alt={game.title} className={style.thumb} />
                       <h5 className={style.genreGame}>{game.genre}</h5>
                       <h2 className={style.titleGame}>{game.title}</h2>
+                      <div className={style.linha}></div>
+                      <h5 className={style.descGame}>Aqui irá ter pequena descrição do jogo que será colocada para cada game</h5>
+                      <Rating />
                     </div>
                   </li>
                 ))
@@ -182,3 +188,6 @@ export default function Home() {
     </div>
   );
 }
+
+
+

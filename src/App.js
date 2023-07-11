@@ -1,9 +1,9 @@
-import Home from './pages/Home';
+import AppRoutes from './routes'
 
 function App() {
   return (
     <div>
-      <Home />
+     <AppRoutes />
     </div>
   );
 }

@@ -1,0 +1,9 @@
+
+.heartIcon {
+    position: absolute;
+    background-color: #FF5C00;
+    float: right;
+    border-radius: 0px 0px 10px 10px;
+    width: 30px;
+    height: 30px;
+}
