@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import style from  './style.module.css';
 
 import gta from '../../assets/gta.png';
+import logo from  '../../assets/logo.png';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -48,6 +49,7 @@ export default function Auth() {
       <img src={gta} className={style.gtaImage}></img>
       
       <form className={style.container} onSubmit={handleAuth} >
+        <img src={logo} className={style.logo}></img>
         <h1 className={style.register}>{isRegisterMode ? 'Cadastro' : 'Login'}</h1>
         <input
           type="text"

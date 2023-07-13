@@ -1,14 +1,14 @@
 .Container {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   margin-top: 20px;
 }
 
 .starIcon {
   display: inline-block;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   width: 20px;
   height: 20px;
   background-color: rgb(190, 190, 190);
@@ -21,9 +21,23 @@
   background-color: rgb(255, 204, 0);
 }
 
-.meia {
-  background-image: linear-gradient(to right, rgb(255, 204, 0) 50%, gray 50%);
+.rotating {
+  animation: rotate 0.5s linear infinite;
 }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
 
 .starCount {
   color: aliceblue;
@@ -31,4 +45,6 @@
   float: right;
   margin-right: 10px;
 }
-  
+
+
+

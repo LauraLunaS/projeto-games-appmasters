@@ -16,7 +16,9 @@ export default function Favorites() {
     try {
       const gamesCollection = collection(db, 'favoritos');
       const snapshot = await getDocs(gamesCollection);
-      const genresData = Array.from(new Set(snapshot.docs.map((doc) => doc.data().genre)));
+      const genresData = Array.from(
+        new Set(snapshot.docs.map((doc) => doc.data().genre))
+      );
       setGenres(genresData);
     } catch (error) {
       console.error('Erro ao buscar gêneros:', error);
@@ -36,17 +38,21 @@ export default function Favorites() {
 
         if (searchTitle) {
           const caseInsensitiveSearchTitle = searchTitle.toLowerCase();
-          gamesQuery = query(gamesCollection, where('title', '>=', caseInsensitiveSearchTitle));
+          gamesQuery = query(
+            gamesCollection,
+            where('title', '>=', caseInsensitiveSearchTitle),
+            where('title', '<=', caseInsensitiveSearchTitle + '\uf8ff') 
+          );
         }
 
         if (selectedGenre) {
-          gamesQuery = query(gamesCollection, where('genre', '==', selectedGenre));
+          gamesQuery = query(gamesQuery, where('genre', '==', selectedGenre));
         }
 
         const snapshot = await getDocs(gamesQuery);
         const gameData = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setGames(gameData);
         setLoading(false);
@@ -57,6 +63,10 @@ export default function Favorites() {
 
     fetchGames();
   }, [searchTitle, selectedGenre]);
+
+  const removeFromFavorites = gameTitle => {
+    setGames(prevFavorites => prevFavorites.filter(game => game.title !== gameTitle));
+  };
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -96,7 +106,7 @@ export default function Favorites() {
         <ul className={style.container}>
           {games.map((game) => (
             <li key={game.id} className={style.cardGame}>
-              <GameList gameTitle={game.title} genre={game.genre} thumbnail={game.thumbnail} />
+              <GameList gameTitle={game.title} genre={game.genre} thumbnail={game.thumbnail} removeFromFavorites={removeFromFavorites}/>
               {game.thumbnail && (
                 <img src={game.thumbnail} alt="Thumbnail" className={style.thumbnail} />
               )}
@@ -109,6 +119,7 @@ export default function Favorites() {
     </div>
   );
 }
+
 
 
 

@@ -41,9 +41,9 @@ body {
   }
 
   .genreGame {
+    background-color: #FF5C00;
     color: white;
     text-align: center;
-    background-color: #FF5C00;
     border-radius: 0px 20px;
     font-family: 'Poppins';
     font-size: 9pt;
@@ -56,13 +56,14 @@ body {
 
   .containerSelectGenre {
     display: flex;
+    position: relative;
     margin-left: 55px;
     margin-right: 55px;
     margin-bottom: 15px;
   }
 
   .selectGenre {
-    margin-left: 60%;
+    display: block;
     border-radius: 10px;
     background-color: rgba(87, 87, 87, 0.17);
     color: white;
@@ -85,7 +86,7 @@ body {
     font-weight: 600;
     font-size: 15pt;
     margin-left: 20px;
-    width: 30%;
+    width: 100%;
   }
  
   .noResultsMessage {
@@ -115,9 +116,39 @@ body {
     font-family: "Montserrat";
     font-weight: 600;
     font-size: 9pt;
-    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top:  15px;
   }
 
+  .searchContainer {
+    display: flex;
+    margin-left: 40%;
+  }
+
+  .searchInput {
+    display: block;
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: rgba(208, 208, 208, 0.194);
+    background-image: url("/src/assets/search.png");
+    background-size: 6% auto;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    color: white;
+    outline: none;
+    padding-left: 35px;
+    margin-right: 15px;
+  }
+
+  .selectStar {
+    display: block;
+    border-radius: 10px;
+    background-color: rgba(87, 87, 87, 0.17);
+    margin-right: 10px;
+    color: aliceblue;
+  }
 
   @media only screen and (max-width: 600px) {
 

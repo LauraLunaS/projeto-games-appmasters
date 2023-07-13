@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../../services/firebaseConnection';
 import axios from 'axios';
 import style from './style.module.css';
 
 import Header from '../../components/Header';
-import Thumb from '../../components/Thumb';
 import Load from '../../components/Load';
 import Error from "../Error";
 import Rating from "../../components/Rating"
@@ -19,6 +20,8 @@ export default function Home() {
   const [noResults, setNoResults] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [filteredGames, setFilteredGames] = useState([]);
+  const [favoriteGames, setFavoriteGames] = useState([]);
+  const [isFavoritesActive, setIsFavoritesActive] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -114,30 +117,71 @@ export default function Home() {
     applyFilters();
   }, [games, selectedGenre, searchTerm]);
 
-  const handleSearch = () => {
-    const filtered = filteredGames.filter((game) =>
-      game.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  
-    setFilteredGames(filtered);
-    setNoResults(filtered.length === 0);
-  };
-  
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
   };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  function truncateDescription(description, maxLength) {
+    if (description.length <= maxLength) {
+      return description;
+    } else {
+      const lastSpaceIndex = description.lastIndexOf(' ', maxLength);
+      const truncatedDescription = description.substring(0, lastSpaceIndex) + '...';
+      return truncatedDescription;
+    }
+  }
+
+  useEffect(() => {
+    if (isFavoritesActive) {
+      console.log('Obtendo jogos favoritos...');
+      const fetchFavoriteGames = async () => {
+        try {
+          const favoritesCollection = collection(db, 'fav');
+          const querySnapshot = await getDocs(favoritesCollection);
   
+          const favoriteGamesData = [];
+          querySnapshot.forEach((doc) => {
+            const game = doc.data();
+            favoriteGamesData.push(game);
+          });
+  
+          console.log('Jogos favoritos:', favoriteGamesData);
+  
+          setFavoriteGames(favoriteGamesData);
+        } catch (error) {
+          console.log('Erro ao recuperar jogos favoritos:', error);
+        }
+      };
+  
+      fetchFavoriteGames();
+    }
+  }, [isFavoritesActive]);
+  
+  const handleFavoritesClick = () => {
+    setIsFavoritesActive(true);
+  };
 
   return (
     <div>
       {!errorMessage ? (
         <>
+          <Header onFavoritesClick={handleFavoritesClick} />
           <div className={style.containerSelectGenre}>
-          <img src={iconGroup} className={style.iconGroup}></img>
-          <p className={style.titleCategory}>
-            {selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}
-          </p>
-          <label htmlFor="genreSelect" className={style.categories}></label>
+            <img src={iconGroup} className={style.iconGroup} alt="Icon Group" />
+            <p className={style.titleCategory}>
+              {selectedGenre ? `JOGOS DE ${selectedGenre.toUpperCase()}` : 'TODOS OS JOGOS'}
+            </p>
+            <div className={style.searchContainer}>
+              <input type="text" className={style.searchInput} value={searchTerm} onChange={handleSearch} />
+              <select className={style.selectStar}>
+                <option value="">⭐</option>
+              </select>
+            </div>
+            <label htmlFor="genreSelect" className={style.categories}></label>
             <select
               id="genreSelect"
               value={selectedGenre}
@@ -155,21 +199,19 @@ export default function Home() {
           {isLoadingData ? (
             <Load />
           ) : noResults ? (
-            <>
             <p className={style.noResultsMessage}>Nenhum jogo encontrado.</p>
-            </>
           ) : (
             <ul className={style.columnContainer}>
               {Array.isArray(filteredGames) ? (
                 filteredGames.map((game) => (
                   <li key={game.id} className={style.columnItem}>
                     <div className={style.cardGame}>
-                      <GameList gameTitle={game.title} genre={game.genre} thumbnail={game.thumbnail} />
                       <img src={game.thumbnail} alt={game.title} className={style.thumb} />
                       <h5 className={style.genreGame}>{game.genre}</h5>
                       <h2 className={style.titleGame}>{game.title}</h2>
                       <div className={style.linha}></div>
-                      <h5 className={style.descGame}>Aqui irá ter pequena descrição do jogo que será colocada para cada game</h5>
+                      <h5 className={style.descGame}>{truncateDescription(game.short_description, 106)}</h5>
+                      <GameList gameId={game.id} gameTitle={game.title}/>
                       <Rating />
                     </div>
                   </li>
@@ -188,6 +230,4 @@ export default function Home() {
     </div>
   );
 }
-
-
 

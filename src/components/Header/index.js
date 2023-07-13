@@ -1,46 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import style from './style.module.css';
 import logo from '../../assets/logo.png';
 
 import Load from '../Load';
 
-export default function Header({ onSearch, onSearchButtonClick }) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+import { getAuth } from 'firebase/auth';
 
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+export default function Header({ onFavoritesClick }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleSearchClick = () => {
-    setSearchTerm('');
-    setIsLoading(true);
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsAuthenticated(!!user);
+    });
 
-    if (searchTerm.trim() !== '') {
-      onSearch(searchTerm);
-      onSearchButtonClick();
-    } else {
-      window.location.reload();
-    }
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-    setIsLoading(false);
+  const handleFavoritesClick = () => {
+    onFavoritesClick(); // Chama a função passada por prop quando o botão "Favoritos" é clicado
   };
 
   return (
     <div className={style.header}>
-        <img src={logo} className={style.logo} alt="Logo" />
-        <p className={style.titleLogo}>GameZone</p>
-      <div className={style.searchContainer}>
-        <input
-          type="text"
-          className={style.search}
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
-        <button onClick={handleSearchClick} className={style.btnsearch}>
-          {isLoading ? <Load /> : 'Search'}
-        </button>
+      <img src={logo} className={style.logo} alt="Logo" />
+      <div className={style.btns}>
+        {!isAuthenticated && (
+          <>
+            <Link to='/auth' className={style.linkBtn}>
+              <button className={style.btnRegister}>SIGN IN</button>
+            </Link>
+            <Link to='/auth'>
+              <button className={style.btnOrRegister}>or</button>
+            </Link>
+            <Link to='/auth'>
+              <button className={style.btnRegister}>REGISTER</button>
+            </Link>
+          </>
+        )}
       </div>
+      {isAuthenticated && (
+        <div className={style.searchContainer}>
+          <button className={style.btnFav} onClick={handleFavoritesClick}>Favoritos</button>
+          <Link to='/auth'className={style.linkBtn}>
+            <button className={style.btnLogout} >LogOut</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
