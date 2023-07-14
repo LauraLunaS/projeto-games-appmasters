@@ -7,7 +7,7 @@ import Load from '../Load';
 
 import { getAuth } from 'firebase/auth';
 
-export default function Header({ onFavoritesClick }) {
+export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -21,9 +21,6 @@ export default function Header({ onFavoritesClick }) {
     };
   }, []);
 
-  const handleFavoritesClick = () => {
-    onFavoritesClick(); // Chama a função passada por prop quando o botão "Favoritos" é clicado
-  };
 
   return (
     <div className={style.header}>
@@ -45,7 +42,6 @@ export default function Header({ onFavoritesClick }) {
       </div>
       {isAuthenticated && (
         <div className={style.searchContainer}>
-          <button className={style.btnFav} onClick={handleFavoritesClick}>Favoritos</button>
           <Link to='/auth'className={style.linkBtn}>
             <button className={style.btnLogout} >LogOut</button>
           </Link>

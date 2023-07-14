@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../../services/firebaseConnection';
 import axios from 'axios';
 import style from './style.module.css';
 
@@ -9,7 +7,9 @@ import Load from '../../components/Load';
 import Error from "../Error";
 import Rating from "../../components/Rating"
 import GameList from '../../components/GameList'
+import Favorited from '../../components/Favorited'
 import iconGroup from '../../assets/iconGroup.png'
+import Api from '../../Api'
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -20,8 +20,7 @@ export default function Home() {
   const [noResults, setNoResults] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [filteredGames, setFilteredGames] = useState([]);
-  const [favoriteGames, setFavoriteGames] = useState([]);
-  const [isFavoritesActive, setIsFavoritesActive] = useState(false);
+
 
   useEffect(() => {
     let isMounted = true;
@@ -135,41 +134,12 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
-    if (isFavoritesActive) {
-      console.log('Obtendo jogos favoritos...');
-      const fetchFavoriteGames = async () => {
-        try {
-          const favoritesCollection = collection(db, 'fav');
-          const querySnapshot = await getDocs(favoritesCollection);
-  
-          const favoriteGamesData = [];
-          querySnapshot.forEach((doc) => {
-            const game = doc.data();
-            favoriteGamesData.push(game);
-          });
-  
-          console.log('Jogos favoritos:', favoriteGamesData);
-  
-          setFavoriteGames(favoriteGamesData);
-        } catch (error) {
-          console.log('Erro ao recuperar jogos favoritos:', error);
-        }
-      };
-  
-      fetchFavoriteGames();
-    }
-  }, [isFavoritesActive]);
-  
-  const handleFavoritesClick = () => {
-    setIsFavoritesActive(true);
-  };
-
   return (
     <div>
       {!errorMessage ? (
         <>
-          <Header onFavoritesClick={handleFavoritesClick} />
+          <Header />
+          <Favorited/>
           <div className={style.containerSelectGenre}>
             <img src={iconGroup} className={style.iconGroup} alt="Icon Group" />
             <p className={style.titleCategory}>
