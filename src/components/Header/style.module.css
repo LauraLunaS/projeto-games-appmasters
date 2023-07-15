@@ -13,6 +13,7 @@
     width: 40px;
     height: 40px;
     margin: 10px;
+    margin-left: 49px;
 }
 
 .searchContainer {
@@ -73,16 +74,6 @@
     margin-top: 20px;
   }
 
-  .btnFav {
-    background: none;
-    color: white;
-    font-weight: 600;
-    font-size: 12pt;
-    font-family: "Montserrat";
-    margin-top: 25px;
-    margin-right: 20px;
-  }
-
   .btnOrRegister {
     font-family: "Montserrat";
     width: 30px;
@@ -94,17 +85,6 @@
 
   
   @media only screen and (max-width: 600px) {
-    .search {
-        width: 175px;
-    }
-
-    .searchContainer {
-        right: 90px;
-    }
-
-    .titleLogo {
-        display: none;
-    }
 
     .logo {
         width: 30px;
@@ -112,24 +92,11 @@
         margin: 15px;
     }
 
+    .btnRegister, .btnLogout {
+      width: 80px;
+      height: 30px;
+    }
+
   }
 
-  @media only screen and (min-width: 600px) {
-    .search {
-        width: 200px;
-    }
 
-    .titleLogo {
-        display: none;
-    }
-  }
-
-  @media only screen and (min-width: 768px) {
-    .search {
-        width: 280px;
-    }
-
-    .titleLogo {
-        display: inline;
-    }
-  }

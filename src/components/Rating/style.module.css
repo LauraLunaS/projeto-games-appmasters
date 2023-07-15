@@ -7,23 +7,21 @@
 
 .starIcon {
   display: inline-block;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  background-color: rgb(190, 190, 190);
-  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  background-color: transparent;
+  border: none;
+  outline: none;
   cursor: pointer;
-  margin-right: 5px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/2164/2164197.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .ativo {
-  background-color: rgb(255, 204, 0);
+  background-color: rgba(240, 255, 255, 0.221);
 }
 
-.rotating {
-  animation: rotate 0.5s linear infinite;
-}
 
 @keyframes rotate {
   from {
@@ -35,9 +33,8 @@
 }
 
 .rotating {
-  animation: rotate 1s linear infinite;
+  animation: rotate 1s linear ;
 }
-
 
 .starCount {
   color: aliceblue;

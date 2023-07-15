@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import style from './style.module.css';
 import logo from '../../assets/logo.png';
 
-import Load from '../Load';
-
 import { getAuth } from 'firebase/auth';
 
 export default function Header() {

@@ -35,6 +35,7 @@
 }
 
 .input {
+    background-color: rgba(163, 163, 163, 0.281);
     height: 35px;
     width: 350px;
     border-radius: 5px;
@@ -42,6 +43,7 @@
     margin: 0 auto;
     margin-top: 10px;
     outline: none;
+    color: rgb(255, 255, 255);
 }
 
 .btnIn {
@@ -81,3 +83,22 @@
     opacity: 1;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 300px;
+    height: 350px;
+  }
+
+  .input {
+    height: 35px;
+    width: 250px;
+  }
+
+  .btnIn {
+    height: 35px;
+    width: 260px;
+  }
+}
+
+

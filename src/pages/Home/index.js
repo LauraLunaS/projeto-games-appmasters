@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { db, auth } from '../../services/firebaseConnection';
+import { addDoc, deleteDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import axios from 'axios';
 import style from './style.module.css';
 
@@ -6,10 +8,10 @@ import Header from '../../components/Header';
 import Load from '../../components/Load';
 import Error from "../Error";
 import Rating from "../../components/Rating"
-import GameList from '../../components/GameList'
-import Favorited from '../../components/Favorited'
+import GameList from '../../components/HeartIcon'
+import Thumb from '../../components/Thumb'
 import iconGroup from '../../assets/iconGroup.png'
-import Api from '../../Api'
+
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -20,7 +22,7 @@ export default function Home() {
   const [noResults, setNoResults] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [filteredGames, setFilteredGames] = useState([]);
-
+  const [favoriteGames, setFavoriteGames] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -124,6 +126,10 @@ export default function Home() {
     setSearchTerm(event.target.value);
   };
 
+  const handleRatingChange = (rating) => {
+    console.log('Nova avaliação:', rating);
+  };
+
   function truncateDescription(description, maxLength) {
     if (description.length <= maxLength) {
       return description;
@@ -134,12 +140,35 @@ export default function Home() {
     }
   }
 
+  const fetchFavoriteGames = async () => {
+    const querySnapshot = await getDocs(collection(db, 'fav'));
+    const favoriteGamesData = querySnapshot.docs.map((doc) => doc.data());
+    setFavoriteGames(favoriteGamesData);
+  };
+  
+  useEffect(() => {
+    fetchFavoriteGames();
+  }, []);
+  
+  const handleFavoritesButtonClick = () => {
+    fetchFavoriteGames(); 
+    const filteredGames = games.filter((game) => {
+      return favoriteGames.some(
+        (favoriteGame) =>
+          favoriteGame.id === game.id && favoriteGame.title === game.title
+      );
+    });
+    setGames(filteredGames);
+  };
+  
+
   return (
     <div>
       {!errorMessage ? (
         <>
-          <Header />
-          <Favorited/>
+          <button onClick={handleFavoritesButtonClick} className={style.hearticon}>🤍</button>
+          <Header showFavoriteGames={true}/>
+          <Thumb />
           <div className={style.containerSelectGenre}>
             <img src={iconGroup} className={style.iconGroup} alt="Icon Group" />
             <p className={style.titleCategory}>
@@ -171,25 +200,27 @@ export default function Home() {
           ) : noResults ? (
             <p className={style.noResultsMessage}>Nenhum jogo encontrado.</p>
           ) : (
+            <>
             <ul className={style.columnContainer}>
               {Array.isArray(filteredGames) ? (
                 filteredGames.map((game) => (
                   <li key={game.id} className={style.columnItem}>
                     <div className={style.cardGame}>
+                      <GameList gameId={game.id} gameTitle={game.title} />
                       <img src={game.thumbnail} alt={game.title} className={style.thumb} />
                       <h5 className={style.genreGame}>{game.genre}</h5>
                       <h2 className={style.titleGame}>{game.title}</h2>
                       <div className={style.linha}></div>
                       <h5 className={style.descGame}>{truncateDescription(game.short_description, 106)}</h5>
-                      <GameList gameId={game.id} gameTitle={game.title}/>
-                      <Rating />
+                      <Rating gameId={game.id} onRatingChange={handleRatingChange}/>
                     </div>
                   </li>
                 ))
               ) : (
                 <div>Erro ao obter a lista de jogos.</div>
               )}
-            </ul>
+            </ul>  
+            </>
           )}
         </>
       ) : (
@@ -200,4 +231,11 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
+
 

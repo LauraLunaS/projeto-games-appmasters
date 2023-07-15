@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { auth } from '../../services/firebaseConnection';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Alert from '@mui/material/Alert';
 import style from  './style.module.css';
 
 import gta from '../../assets/gta.png';

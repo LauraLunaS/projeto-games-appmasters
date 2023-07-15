@@ -150,6 +150,10 @@ body {
     color: aliceblue;
   }
 
+  .hearticon {
+    
+  }
+
   @media only screen and (max-width: 600px) {
 
     .cardGame {
