@@ -23,6 +23,8 @@ export default function Home() {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [filteredGames, setFilteredGames] = useState([]);
   const [favoriteGames, setFavoriteGames] = useState([]);
+  const [availableGames, setAvailableGames] = useState([]);
+  const [selectedStars, setSelectedStars] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -126,9 +128,6 @@ export default function Home() {
     setSearchTerm(event.target.value);
   };
 
-  const handleRatingChange = (rating) => {
-    console.log('Nova avaliação:', rating);
-  };
 
   function truncateDescription(description, maxLength) {
     if (description.length <= maxLength) {
@@ -141,7 +140,7 @@ export default function Home() {
   }
 
   const fetchFavoriteGames = async () => {
-    const querySnapshot = await getDocs(collection(db, 'fav'));
+    const querySnapshot = await getDocs(collection(db, 'favorites'));
     const favoriteGamesData = querySnapshot.docs.map((doc) => doc.data());
     setFavoriteGames(favoriteGamesData);
   };
@@ -150,8 +149,8 @@ export default function Home() {
     fetchFavoriteGames();
   }, []);
   
-  const handleFavoritesButtonClick = () => {
-    fetchFavoriteGames(); 
+  const handleFavoritesButtonClick = async () => {
+    await fetchFavoriteGames(); 
     const filteredGames = games.filter((game) => {
       return favoriteGames.some(
         (favoriteGame) =>
@@ -160,14 +159,18 @@ export default function Home() {
     });
     setGames(filteredGames);
   };
-  
+
+
+
 
   return (
     <div>
       {!errorMessage ? (
         <>
-          <button onClick={handleFavoritesButtonClick} className={style.hearticon}>🤍</button>
           <Header showFavoriteGames={true}/>
+          <div className={style.containerHeart}>
+            <button onClick={handleFavoritesButtonClick} className={style.hearticon}>🤍</button>
+          </div>
           <Thumb />
           <div className={style.containerSelectGenre}>
             <img src={iconGroup} className={style.iconGroup} alt="Icon Group" />
@@ -176,8 +179,13 @@ export default function Home() {
             </p>
             <div className={style.searchContainer}>
               <input type="text" className={style.searchInput} value={searchTerm} onChange={handleSearch} />
-              <select className={style.selectStar}>
+              <select className={style.selectStar} value={selectedStars} onChange={(e) => setSelectedStars(e.target.value)}>
                 <option value="">⭐</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
               </select>
             </div>
             <label htmlFor="genreSelect" className={style.categories}></label>
@@ -212,7 +220,6 @@ export default function Home() {
                       <h2 className={style.titleGame}>{game.title}</h2>
                       <div className={style.linha}></div>
                       <h5 className={style.descGame}>{truncateDescription(game.short_description, 106)}</h5>
-                      <Rating gameId={game.id} onRatingChange={handleRatingChange}/>
                     </div>
                   </li>
                 ))

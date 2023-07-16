@@ -22,7 +22,9 @@ export default function Header() {
 
   return (
     <div className={style.header}>
-      <img src={logo} className={style.logo} alt="Logo" />
+      <Link to='/home'>
+        <img src={logo} className={style.logo} alt="Logo"/>
+      </Link>
       <div className={style.btns}>
         {!isAuthenticated && (
           <>

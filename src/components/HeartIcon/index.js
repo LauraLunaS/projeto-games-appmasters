@@ -17,7 +17,7 @@ export default function GameList({ gameId, gameTitle}) {
   });
 
   const checkFavorite = async () => {
-    const favoritesCollection = collection(db, 'fav');
+    const favoritesCollection = collection(db, 'favorites');
     const gameDoc = doc(favoritesCollection, gameTitle);
     const docSnapshot = await getDoc(gameDoc);
 
@@ -50,15 +50,16 @@ export default function GameList({ gameId, gameTitle}) {
         id: gameId
       };
 
-      const favoritesCollection = collection(db, 'fav');
+      const favoritesCollection = collection(db, 'favorites');
       await setDoc(doc(favoritesCollection, gameTitle), game)
       console.log('Jogo favorito adicionado com sucesso!')
-      showAlertMessage('Jogo favorito adicionado com sucesso')
+      alert('Jogo favorito adicionado com sucesso')
       setIsFavorited(true)
       } else {
-      const favoritesCollection = collection(db, 'fav');
+      const favoritesCollection = collection(db, 'favorites');
       await deleteDoc(doc(favoritesCollection, gameTitle));
       console.log('Jogo removido dos favoritos com sucesso!');
+      alert('Jogo removido dos favoritos com sucesso!');
       setIsFavorited(false);
     }
       } catch (error) {

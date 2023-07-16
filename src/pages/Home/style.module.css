@@ -151,8 +151,18 @@ body {
   }
 
   .hearticon {
-    
+    margin-left: 1180px;
+    background-color: #e4e4e44c;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
   }
+
+  .containerHeart {
+    position: relative;
+    margin-top: -65px
+  }
+
 
   @media only screen and (max-width: 600px) {
 
@@ -170,7 +180,7 @@ body {
     }
 
     .titleCategory {
-      font-size: 9pt;
+      display: none;
     }
 
     .selectGenre {
@@ -179,6 +189,13 @@ body {
 
     .descGame {
       font-size: 8pt;
+    }
+
+    .iconGroup {
+      display: none;
+    }
+    .containerSelectGenre {
+      margin-right: 600px;
     }
 
   }
@@ -198,6 +215,14 @@ body {
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .iconGroup, .titleCategory {
+      display: none;
+    }
+
+    .containerSelectGenre {
+      margin-right: 500px;
+    }
+
   }
 
   @media only screen and (min-width: 768px) {
@@ -209,6 +234,10 @@ body {
     .columnContainer {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .selectStar {
+      height: 35px;
     }
 
   }
@@ -223,4 +252,13 @@ body {
     .titleCategory {
       font-size: 14pt;
     }
+
+    .iconGroup, .titleCategory {
+      display: inline;
+    }
+
+    .containerSelectGenre {
+      margin-right: 55px;
+    }
+
   }

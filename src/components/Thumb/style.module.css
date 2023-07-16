@@ -10,7 +10,7 @@
 .container {
     width: 100%;
     height: 500px;
-    margin-top: -105px;
+    margin-top: -100px;
     margin-bottom: 30px;   
 }
 
@@ -36,7 +36,6 @@
     color: white;
     font-family: 'Montserrat';
     font-weight: 600;
-    margin-top: 120px;
 }
 
 .logoWindowns {
@@ -56,3 +55,114 @@
     margin-top: 15px;
 }
 
+.description {
+    margin-top: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+    .thumbimage {
+        width: 250px;
+        height: 280px;
+    }
+    .icons, .avaliable, .logoWindowns {
+        display: none;
+    }
+    .container {
+        height: 280px;
+    }
+    .titleBox {
+        font-size: 11pt;
+    }
+    .subtitleBox {
+        font-size: 9pt;
+    }
+    .containerbox {
+        margin-top: 90px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .thumbimage {
+        width: 340px;
+        height: 300px;
+    }
+    .icons, .avaliable, .logoWindowns {
+        display: none;
+    }
+    .container {
+        height: 300px;
+    }
+    .titleBox {
+        font-size: 12pt;
+    }
+    .subtitleBox {
+        font-size: 9pt;
+    }
+    .containerbox {
+        margin-top: 110px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .thumbimage {
+        width: 450px;
+        height: 350px;
+    }
+    .container {
+        height: 350px;
+    }
+    .icons, .avaliable, .logoWindowns {
+        display:inline;
+    }
+    .titleBox {
+        font-size: 13pt;
+    }
+    .subtitleBox {
+        font-size: 10pt;
+    }
+    .avaliable {
+        font-size: 10pt;
+    }
+    .paragrafo {
+        font-size: 8pt;
+    }
+    .icons {
+        display: flex;
+    }
+}
+
+@media only screen and (min-width: 980px) {
+    .container {
+        height: 400px;
+    }
+    .thumbimage {
+        width: 600px;
+        height: 400px;
+    }
+    .containerbox {
+        margin-top: 140px;
+    }
+    .titleBox {
+        font-size: 15pt;
+    }
+    .subtitleBox {
+        font-size: 11pt;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .container {
+        height: 450px;
+    }
+    .thumbimage {
+        width: 760px;
+        height: 450px;
+    }
+    .titleBox {
+        font-size: 20pt;
+    }
+    .subtitleBox {
+        font-size: 13pt;
+    }
+
+}

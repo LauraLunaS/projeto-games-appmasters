@@ -21,9 +21,10 @@ export default function Auth() {
       try {
         if (isRegisterMode) {
           await createUserWithEmailAndPassword(auth, email, password);
+          alert('Bem-vindo')
           navigate('/home', { replace: true });
         } else {
-          alert('Bem-vindo')
+          alert('Bem-vindo de volta')
           navigate('/home', { replace: true });
         }
       } catch (error) {
@@ -33,6 +34,7 @@ export default function Auth() {
           setEmail('');
           setPassword('');
         } else {
+          alert('Não foi possível fazer a autenticação, tente novamente')
           console.log('ERRO AO FAZER A AUTENTICAÇÃO', error);
         }
       }
