@@ -1,11 +1,11 @@
-import ThumbImage from '../../assets/ThumbImage.png'
 import logoWindowns from '../../assets/logoWindows.png';
+import imagethumb from '../../assets/imagethum.png';
 import style from './style.module.css';
 
 export default function Thumb() {
     return (
         <div className={style.container} >
-            <img src={ThumbImage} className={style.thumbimage}></img>
+            <img src={imagethumb} className={style.thumbimage}></img>
             <div className={style.containerbox}>
                 <h1 className={style.titleBox}>ONLINE MATCHES</h1>
                 <p className={style.subtitleBox}>Abra as portas do seu universo virtual e mergulhe na paixão dos jogos sem limites.</p>  
