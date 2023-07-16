@@ -8,9 +8,9 @@ export default function Thumb() {
             <img src={ThumbImage} className={style.thumbimage}></img>
             <div className={style.containerbox}>
                 <h1 className={style.titleBox}>ONLINE MATCHES</h1>
-                <p className={style.subtitleBox}>Largest and most trusted top-up websites for games and online entertainment in Asia and beyond.</p>  
+                <p className={style.subtitleBox}>Abra as portas do seu universo virtual e mergulhe na paixão dos jogos sem limites.</p>  
                 <div className={style.description}>
-                    <p className={style.avaliable}>Avaliable en:</p>
+                    <p className={style.avaliable}>Plataform en:</p>
                 </div>
                 <div className={style.icons}>
                     <img src={logoWindowns} className={style.logoWindowns}></img>

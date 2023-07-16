@@ -1,47 +1,32 @@
-.Container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
 
-.starIcon {
-  display: inline-block;
-  width: 26px;
-  height: 26px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-image: url('https://cdn-icons-png.flaticon.com/512/2164/2164197.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.ativo {
-  background-color: rgba(240, 255, 255, 0.221);
-}
+  /*('https://cdn-icons-png.flaticon.com/512/2164/2164197.png');*/
 
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .star {
+    display: inline-block; /* Alteração aqui */
+    width: 23px;
+    height: 23px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2164/2164197.png');
+    background-size: cover;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
   }
-}
+  
+  .active {
+    transform: scale(1.2);
+  }
 
-.rotating {
-  animation: rotate 1s linear ;
-}
-
-.starCount {
-  color: aliceblue;
-  display: flex;
-  float: right;
-  margin-right: 10px;
-}
-
-
+  .clickRating {
+    color: aliceblue;
+    margin-left: 8px;
+  }
+  
+  
 

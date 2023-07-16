@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../../services/firebaseConnection';
-import { addDoc, deleteDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { deleteDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import AuthenticationChecker from '../AuthenticationChecker';
 
 import style from './style.module.css';
 
 export default function GameList({ gameId, gameTitle}) {
   const [isFavorited, setIsFavorited] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     checkFavorite();
-    checkAuthentication();
-  });
+  }, [gameTitle]);
 
   const checkFavorite = async () => {
     const favoritesCollection = collection(db, 'favorites');
@@ -28,17 +27,6 @@ export default function GameList({ gameId, gameTitle}) {
     }
   };
 
-  const checkAuthentication = () => {
-    auth.onAuthStateChanged(user => {
-      setIsAuthenticated(!!user);
-    });
-  };
-
-  const showAlertMessage = (message) => {
-    setShowAlert(true);
-    console.log(message); 
-  };
-  
   const addToFavorites = async () => {
     console.log('gameId:', gameId);
     
@@ -72,11 +60,13 @@ export default function GameList({ gameId, gameTitle}) {
   }
   
   return (
-
-    <button onClick={addToFavorites} className={style.heartIcon}>
-      {isFavorited ? '❤️' : '🤍'}
-    </button>
-  
+    <AuthenticationChecker>
+      {(isAuthenticated) => (
+        <button onClick={addToFavorites} className={style.heartIcon}>
+          {isFavorited ? '❤️' : '🤍'}
+        </button>
+      )}
+    </AuthenticationChecker>
   );
 }
 

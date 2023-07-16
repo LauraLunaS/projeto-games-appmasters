@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../../services/firebaseConnection';
-import { addDoc, deleteDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import axios from 'axios';
 import style from './style.module.css';
 
@@ -12,6 +12,7 @@ import GameList from '../../components/HeartIcon'
 import Thumb from '../../components/Thumb'
 import iconGroup from '../../assets/iconGroup.png'
 
+import AuthenticationChecker from '../../components/AuthenticationChecker';
 
 export default function Home() {
   const [games, setGames] = useState([]);
@@ -23,8 +24,10 @@ export default function Home() {
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [filteredGames, setFilteredGames] = useState([]);
   const [favoriteGames, setFavoriteGames] = useState([]);
-  const [availableGames, setAvailableGames] = useState([]);
-  const [selectedStars, setSelectedStars] = useState(null);
+  const [ratedGames, setRatedGames] = useState([]);
+  const [selectedStars, setSelectedStars] = useState('');
+  const [ascendingOrder, setAscendingOrder] = useState(true);
+
 
   useEffect(() => {
     let isMounted = true;
@@ -160,17 +163,36 @@ export default function Home() {
     setGames(filteredGames);
   };
 
-
-
+  const fetchRatedGames = async () => {
+    const q = query(collection(db, 'ratings'), orderBy('rating', ascendingOrder ? 'asc' : 'desc'));
+    const querySnapshot = await getDocs(q);
+    const ratedGamesData = querySnapshot.docs.map((doc) => doc.data());
+    setRatedGames(ratedGamesData);
+  };
+  
+  useEffect(() => {
+    fetchRatedGames();
+  }, []);
+  
+  const handleStarClick = async () => {
+    await fetchRatedGames();
+    const filteredGames = games.filter((game) => {
+      return ratedGames.some(
+        (ratedGame) =>
+          ratedGame.id === game.id 
+      );
+    });
+    setGames(filteredGames);
+    setAscendingOrder(!ascendingOrder);
+  };
+  
+  
 
   return (
     <div>
       {!errorMessage ? (
         <>
           <Header showFavoriteGames={true}/>
-          <div className={style.containerHeart}>
-            <button onClick={handleFavoritesButtonClick} className={style.hearticon}>🤍</button>
-          </div>
           <Thumb />
           <div className={style.containerSelectGenre}>
             <img src={iconGroup} className={style.iconGroup} alt="Icon Group" />
@@ -179,14 +201,9 @@ export default function Home() {
             </p>
             <div className={style.searchContainer}>
               <input type="text" className={style.searchInput} value={searchTerm} onChange={handleSearch} />
-              <select className={style.selectStar} value={selectedStars} onChange={(e) => setSelectedStars(e.target.value)}>
-                <option value="">⭐</option>
-                <option value="5">5</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-              </select>
+              <div className={style.containerStar}>
+              <button onClick={handleStarClick} className={style.selectStar}>⭐</button>
+            </div>
             </div>
             <label htmlFor="genreSelect" className={style.categories}></label>
             <select
@@ -202,6 +219,13 @@ export default function Home() {
                 </option>
               ))}
             </select>
+            <AuthenticationChecker>
+            {(isLoggedIn) => (
+              <div className={style.containerHeart}>
+                {isLoggedIn ? <button onClick={handleFavoritesButtonClick} className={style.hearticon}>🤍</button> : <p></p>}
+              </div>
+            )}
+          </AuthenticationChecker>
           </div>
           {isLoadingData ? (
             <Load />
@@ -220,6 +244,7 @@ export default function Home() {
                       <h2 className={style.titleGame}>{game.title}</h2>
                       <div className={style.linha}></div>
                       <h5 className={style.descGame}>{truncateDescription(game.short_description, 106)}</h5>
+                      <Rating gameId={game.id}/>
                     </div>
                   </li>
                 ))

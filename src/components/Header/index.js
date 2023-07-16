@@ -1,52 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import style from './style.module.css';
 import logo from '../../assets/logo.png';
 
-import { getAuth } from 'firebase/auth';
+import AuthenticationChecker from '../AuthenticationChecker';
 
 export default function Header() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setIsAuthenticated(!!user);
-    });
+  const handleClick = () => {
+    navigate('/auth');
+  };
+  
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-
-  return (
-    <div className={style.header}>
-      <Link to='/home'>
-        <img src={logo} className={style.logo} alt="Logo"/>
-      </Link>
-      <div className={style.btns}>
-        {!isAuthenticated && (
-          <>
-            <Link to='/auth' className={style.linkBtn}>
-              <button className={style.btnRegister}>SIGN IN</button>
-            </Link>
-            <Link to='/auth'>
-              <button className={style.btnOrRegister}>or</button>
-            </Link>
-            <Link to='/auth'>
-              <button className={style.btnRegister}>REGISTER</button>
-            </Link>
-          </>
+    return (
+      <AuthenticationChecker>
+        {(isAuthenticated) => (
+          <div className={style.header}>
+              <img src={logo} className={style.logo} alt="Logo"/>
+            <div className={style.btns}>
+              {!isAuthenticated ? (
+                <div className={style.Containerbtn}>
+                  <button className={style.btnRegister} onClick={handleClick}>SIGN IN</button>
+                  <button className={style.btnOrRegister}>or</button>
+                  <button className={style.btnRegister} onClick={handleClick}>REGISTER</button>
+                </div>
+              ) : (
+                <div className={style.searchContainer}>
+                </div>
+              )}
+            </div>
+          </div>
         )}
-      </div>
-      {isAuthenticated && (
-        <div className={style.searchContainer}>
-          <Link to='/auth'className={style.linkBtn}>
-            <button className={style.btnLogout} >LogOut</button>
-          </Link>
-        </div>
-      )}
-    </div>
-  );
+      </AuthenticationChecker>
+    );
 }
+
