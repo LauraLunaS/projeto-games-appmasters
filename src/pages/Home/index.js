@@ -26,7 +26,7 @@ export default function Home() {
   const [favoriteGames, setFavoriteGames] = useState([]);
   const [ratedGames, setRatedGames] = useState([]);
   const [selectedStars, setSelectedStars] = useState('');
-  const [ascendingOrder, setAscendingOrder] = useState(true);
+  const [ascendingOrder, setAscendingOrder] = useState(null);
 
 
   useEffect(() => {
@@ -172,7 +172,7 @@ export default function Home() {
   
   useEffect(() => {
     fetchRatedGames();
-  }, []);
+  }, );
   
   const handleStarClick = async () => {
     await fetchRatedGames();
@@ -185,7 +185,6 @@ export default function Home() {
     setGames(filteredGames);
     setAscendingOrder(!ascendingOrder);
   };
-  
   
 
   return (

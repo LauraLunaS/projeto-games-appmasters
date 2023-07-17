@@ -1,16 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDn0YWmczmsxihZLXIXeRWRJja8ThPXjI4",
-  authDomain: "games-project-7d334.firebaseapp.com",
-  projectId: "games-project-7d334",
-  storageBucket: "games-project-7d334.appspot.com",
-  messagingSenderId: "455873876513",
-  appId: "1:455873876513:web:787d1839345a5a617c8960",
-  measurementId: "G-GJ40V4XX14"
+  apiKey: "AIzaSyAyHZC8Jj5b1KALCf-HldC6V30Cm2L-PcM",
+  authDomain: "games-43599.firebaseapp.com",
+  projectId: "games-43599",
+  storageBucket: "games-43599.appspot.com",
+  messagingSenderId: "1065213397836",
+  appId: "1:1065213397836:web:9b8383648a56282c4e9de9",
+  measurementId: "G-6MN6R68XTH"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
